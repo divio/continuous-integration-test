@@ -1,0 +1,13 @@
+language: python
+
+sudo: false
+
+matrix:
+  include:
+    - python: 3.5
+      env: TOX_ENV='flake8'
+    - python: 3.5
+      env: TOX_ENV='isort'
+
+install:
+  - pip install isort tox
