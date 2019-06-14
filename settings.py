@@ -8,12 +8,12 @@ INSTALLED_ADDONS = [
     # </INSTALLED_ADDONS>
 ]
 
-import aldryn_addons.settings
+import aldryn_addons.settings  # noqa
 aldryn_addons.settings.load(locals())
 
 
 # all django settings can be altered here
 
-INSTALLED_APPS.extend([
+INSTALLED_APPS.extend([  # noqa
     # add your project specific apps here
 ])
