@@ -6,7 +6,17 @@ python:
   - 3.5
 
 install:
-  - pip install isort python-flake8
+  - pip install isort flake8
 
 script:
   - flake8
+
+# https://docs.travis-ci.com/user/deployment/custom/#git
+# after_success:
+#   - eval "$(ssh-agent -s)"
+#   - chmod 600 .travis/deploy_key.pem
+#   - ssh-add .travis/deploy_key.pem
+#   - pip install divio-cli
+#   - echo "XXX" > ~/.netrc
+#   - echo "" > .aldryn
+#   - divio project deploy test
