@@ -6,7 +6,7 @@ python:
   - 3.5
 
 install:
-  - pip install isort
+  - pip install isort python-flake8
 
 script:
   - flake8
