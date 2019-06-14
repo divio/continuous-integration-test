@@ -14,7 +14,7 @@ script:
 # https://docs.travis-ci.com/user/deployment/custom/#git
 after_success:
    - pip install divio-cli
-   - divio project login TOKEN
+   - divio login $TOKEN
    - divio project deploy --remote-id 69892
 
 env:
