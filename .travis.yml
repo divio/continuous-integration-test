@@ -12,11 +12,18 @@ script:
   - flake8 --max-line-length=200
 
 # https://docs.travis-ci.com/user/deployment/custom/#git
-# after_success:
-#   - eval "$(ssh-agent -s)"
-#   - chmod 600 .travis/deploy_key.pem
-#   - ssh-add .travis/deploy_key.pem
-#   - pip install divio-cli
-#   - echo "XXX" > ~/.netrc
-#   - echo "" > .aldryn
-#   - divio project deploy test
+after_success:
+   - pip install divio-cli
+   - divio project login TOKEN
+   - divio project deploy --remote-id 69892
+   - secure: EsKcqn4H0EBqZhEtsbzPzYXY/IHn21P+Bbp7GinN+NkLsZOsktu4qEPg7oMIj5MgjdJQgtQsq1XP1BL1m/xRHPAEGcNNxx3TYpTk8cFAKLg8sMFaSZ30kwECj32HWoWJJKtigfoF+4kMSWXTa5ZkxX9zRzqz2cdNOdhWl0TUTJSGRbfrOXskdI+4GEQgwddh0zIOXmvOf7UUoE5KtSijlsPFW6ICjm/PGrxQGXj8QDsp5rAd6+ssiQUNkGEuVZxxJPCSIHju53VSvm9ZWU+FUW/VDAj4DG8+0Auq8ZULGssp5AQxDZG5bESYbeFiv90xg98pZ1idVMMpAdPU7tfpQpp3BsG/Iv2Lms4hxVWq4UJGGYcV8dxzKaHbaIEk3f5IRdZKVxP2kGBesTZgZJatSQ9TscP577EaFsO78XwbhvvEKMOtIA9ci1zwFzqfYlz+gcOQGXZWBIlkCOHEhqu3foa61urL/ObI4twvOGDPWysRknKFIUgUhi1b/Qb/N/z464RXVpyg37EttlyzcN9QYiTcOH1lJn3ZaBdHauw1uam2x5OakA0fWE02UBZ/KiaBVMvloP82QQUrWxXczIrsjJr6rlJUKvYps3664zWwwQMtfAzmWGAw6vMaKJOTkCGfCAKI0EI9AUt4KhY7wYfcm0K71FABnSbtcQ7X6klJCNI=
+
+# to deploy
+# curl -X POST --data 'stage=<env-slug>' --header "Authorization: Basic <token>" https://control.divio.com/api/v1/website/<website id>/deploy/
+# <env-slug> is either "test" or "live"
+
+# to check for the deployment
+# curl --header "Authorization: Basic <token>" https://control.divio.com/api/v1/website/<website id>/deploy/ 2>/dev/null | jq .test.last_deployment.status
+
+# race conditions can happen where the Control Panel is still pulling the git changes while ci is triggering deploy
+# deploy trigger should ideally happen after the merge
